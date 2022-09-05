@@ -75,7 +75,7 @@ void matcal::reset()
 {
 	random_device rd;
 	mt19937 gen(rd());
-	uniform_int_distribution<int> dis(0, 1);
+	uniform_int_distribution<int> dis(0, 2);
 
 	for (int i = 0; i < 3; ++i) {
 		for (int j = 0; j < 3; ++j) {
