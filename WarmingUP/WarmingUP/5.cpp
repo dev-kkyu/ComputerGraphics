@@ -176,7 +176,7 @@ void setData::deque_r()
 
 void setData::prtPoint()
 {
-	cout << front - rear + 1 << "°³" << endl;
+	cout << front - rear + 1 << "°³\n" << endl;
 }
 
 void setData::clearList()
