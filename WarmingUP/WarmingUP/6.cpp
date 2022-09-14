@@ -16,6 +16,7 @@ private:
 	int num;	//현재 몇번째
 	int cont;	//연속으로 몇번째인지
 	int prevway;	//어디로 연속
+	bool isWay[4];	//각 방향으로 한번이라도 갔는지
 	bool end;		//끝났는지
 
 public:
@@ -72,16 +73,7 @@ int main()
 
 game::game()
 {
-	for (int i = 0; i < 30; ++i)
-		for (int j = 0; j < 30; ++j)
-			board[i][j] = 0;
-
-	board[0][0] = 1;
-	x = y = 0;
-	num = 1;
-	cont = 0;
-	prevway = wleft;
-	end = false;
+	reset();
 }
 
 void game::go()
@@ -98,6 +90,12 @@ void game::go()
 
 	int way = dis(gen);
 
+	for (int i = 0; i < 4; ++i) {
+		if (!isWay[i]) {
+			way = i;
+			break;
+		}
+	}
 
 	bool iscont = false;
 	while (true) {
@@ -129,12 +127,15 @@ void game::go()
 		break;
 	}
 
+
 	if (prevway == way)
 		++cont;
 	else
 		cont = 0;
 
 	prevway = way;
+
+	isWay[way] = true;
 
 	switch (way) {
 	case wleft:
@@ -162,7 +163,7 @@ void game::prt()
 {
 	for (int i = 0; i < 30; ++i) {
 		for (int j = 0; j < 30; ++j) {
-			cout << format("{:6} ", board[i][j]);
+			cout << format("{:5} ", board[i][j]);
 		}
 		cout << endl;
 	}
@@ -185,6 +186,11 @@ void game::reset()
 	cont = 0;
 	prevway = wleft;
 	end = false;
+
+	isWay[wleft] = false;
+	isWay[wright] = false;
+	isWay[wup] = false;
+	isWay[wdown] = false;
 }
 
 void game::move_r()
