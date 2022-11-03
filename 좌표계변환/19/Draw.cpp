@@ -237,12 +237,18 @@ void normalView()
 void topView()
 {
 	const glm::mat4 Unit(1.0f);
-	// 투영변환
-	glm::mat4 projection = glm::mat4(1.0f);
-	projection = glm::perspective(glm::radians(45.0f), (float)winWidth / (float)winHeight, 0.1f, 100.f);
-	projection = glm::translate(projection, glm::vec3(0.0, 0.0, 0.0)); //--- 공간을 약간 뒤로 미뤄줌
+	//// 투영변환
+	// 원근투영
+	//glm::mat4 projection = glm::mat4(1.0f);
+	//projection = glm::perspective(glm::radians(45.0f), (float)winWidth / (float)winHeight, 0.1f, 100.f);
+	//projection = glm::translate(projection, glm::vec3(0.0, 0.0, 0.0)); //--- 공간을 약간 뒤로 미뤄줌
+	//unsigned int projectionLocation = glGetUniformLocation(shaderID, "projectionTransform"); //--- 투영 변환 값 설정
+	//glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &projection[0][0]);
+
+	//직각투영
+	glm::mat4 projection = glm::ortho(-2.f, 2.f, -2.f, 2.f, -2.f, 2.f); //--- 투영 공간을 [-100.0, 100.0] 공간으로 설정
 	unsigned int projectionLocation = glGetUniformLocation(shaderID, "projectionTransform"); //--- 투영 변환 값 설정
-	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &projection[0][0]);
+	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, glm::value_ptr(projection));
 
 
 	// 뷰잉변환(카메라)
@@ -253,7 +259,7 @@ void topView()
 	glm::mat4 cameraTrans = glm::translate(Unit, glm::vec3(movCX, 0.0f, 0.0f));
 	glm::mat4 cameraTransrev = glm::translate(Unit, glm::vec3(-movCX, 0.0f, 0.0f));
 
-	glm::vec3 cameraPos = glm::vec3(movCX, movCZ + 3.f, 0.0); //--- 카메라 위치 (어디서 볼건지)
+	glm::vec3 cameraPos = glm::vec3(movCX, movCZ + 1.f, 0.0); //--- 카메라 위치 (어디서 볼건지)
 	glm::vec3 cameraDirection = glm::vec3(movCX, 0.0f, 0.0f); //--- 카메라 바라보는 방향 (어디볼건지 하면될듯)
 	glm::vec3 cameraUp = glm::vec3(0.0f, 0.0f, -1.0f); //--- 카메라 위쪽 방향->벡터임(방향만) (음수하면 화면 상하거꾸로보임)
 
@@ -272,21 +278,19 @@ void frontView()
 {
 	const glm::mat4 Unit(1.0f);
 	// 투영변환
-	glm::mat4 projection = glm::mat4(1.0f);
-	projection = glm::perspective(glm::radians(45.0f), (float)winWidth / (float)winHeight, 0.1f, 100.f);
-	projection = glm::translate(projection, glm::vec3(0.0, 0.0, 0.0)); //--- 공간을 약간 뒤로 미뤄줌
+	//// 원근투영
+	//glm::mat4 projection = glm::mat4(1.0f);
+	//projection = glm::perspective(glm::radians(45.0f), (float)winWidth / (float)winHeight, 0.1f, 100.f);
+	//projection = glm::translate(projection, glm::vec3(0.0, 0.0, 0.0)); //--- 공간을 약간 뒤로 미뤄줌
+	//unsigned int projectionLocation = glGetUniformLocation(shaderID, "projectionTransform"); //--- 투영 변환 값 설정
+	//glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &projection[0][0]);
+	//// 직각투영
+	glm::mat4 projection = glm::ortho(-2.f, 2.f, -2.f, 2.f, -2.f, 2.f); //--- 투영 공간을 [-100.0, 100.0] 공간으로 설정
 	unsigned int projectionLocation = glGetUniformLocation(shaderID, "projectionTransform"); //--- 투영 변환 값 설정
-	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &projection[0][0]);
+	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, glm::value_ptr(projection));
 
 
 	// 뷰잉변환(카메라)
-	//glm::vec3 cameraPos = glm::vec3(movCX, 0.f, 3.f); //--- 카메라 위치 (어디서 볼건지)
-	//glm::vec3 cameraDirection = glm::vec3(movCX, 0.f, 0.f); //--- 카메라 바라보는 방향 (어디볼건지 하면될듯)
-	//glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f); //--- 카메라 위쪽 방향->벡터임(방향만) (음수하면 화면 상하거꾸로보임)
-	//glm::mat4 view = glm::mat4(1.0f);
-	//view = glm::lookAt(cameraPos, cameraDirection, cameraUp);
-	//view = glm::rotate(view, glm::radians(CAngle_Rotation), glm::vec3(0.0, 1.0, 0.0));
-
 	glm::mat4 cameraRotation = glm::rotate(Unit, glm::radians(CAngle_Rotation), glm::vec3(0.0, 1.0, 0.0));
 	glm::mat4 cameraRevolutionW = glm::rotate(Unit, glm::radians(CAngle_RevolutionW), glm::vec3(0.0, 1.0, 0.0));
 	glm::mat4 cameraRevolutionLok = glm::rotate(Unit, glm::radians(CAngle_RevolutionLok), glm::vec3(0.0, 1.0, 0.0));
@@ -294,7 +298,7 @@ void frontView()
 	glm::mat4 cameraTrans = glm::translate(Unit, glm::vec3(movCX, 0.0f, 0.0f));
 	glm::mat4 cameraTransrev = glm::translate(Unit, glm::vec3(-movCX, 0.0f, 0.0f));
 
-	glm::vec3 cameraPos = glm::vec3(movCX, 0.f, 3.0f + movCZ); //--- 카메라 위치 (어디서 볼건지)
+	glm::vec3 cameraPos = glm::vec3(movCX, 0.f, 1.0f + movCZ); //--- 카메라 위치 (어디서 볼건지)
 	glm::vec3 cameraDirection = glm::vec3(movCX, 0.0f, 0.0f); //--- 카메라 바라보는 방향 (어디볼건지 하면될듯)
 	glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f); //--- 카메라 위쪽 방향->벡터임(방향만) (음수하면 화면 상하거꾸로보임)
 
