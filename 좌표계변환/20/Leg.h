@@ -10,6 +10,6 @@ public:
     Leg();
     Leg(glm::vec3 Color, int i);    //i´Â À§Ä¡
 
-    void update();
+    void update() override;
 };
 

@@ -28,3 +28,5 @@ extern GLuint shaderID; //--- 세이더 프로그램 이름
 
 extern GLfloat openF;
 extern bool isOpenF;
+extern bool isW, isA, isS, isD;
+extern int isJump;

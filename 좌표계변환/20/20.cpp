@@ -1,6 +1,7 @@
 #include "Header.h"
 #include "Draw.h"
 #include "Keyboard.h"
+#include "KeyboardUP.h"
 #include "Timer.h"
 
 bool make_vertexShaders();
@@ -30,9 +31,39 @@ vector<glm::ivec3> face;
 
 bool isDepTest = true;
 
+glm::vec3 CubeS, CubeL;
+
 void main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 {
 	ReadObj("cube.obj");
+
+	random_device rd;
+	default_random_engine dre(rd());
+	uniform_real_distribution<float> GenXY(-1, 1);
+	CubeS = glm::vec3(GenXY(dre), GenXY(dre), -1.f);
+	CubeL = glm::vec3(GenXY(dre), GenXY(dre), -0.8f);
+	for (int i = 0; i < 3; ++i) {
+		if (CubeS.x > CubeL.x)
+			swap(CubeS.x, CubeL.x);
+		if (CubeS.y > CubeL.y)
+			swap(CubeS.y, CubeL.y);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
 
 	//--- 윈도우 생성하기
 	glutInit(&argc, argv);
@@ -54,6 +85,7 @@ void main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 	glutDisplayFunc(drawScene); //--- 출력 콜백 함수
 	glutReshapeFunc(Reshape);
 	glutKeyboardFunc(Keyboard);
+	glutKeyboardUpFunc(KeyboardUP);
 	glutSpecialFunc(SpecialKeyboard);
 	glutMouseFunc(Mouse);
 	glutMotionFunc(Motion);

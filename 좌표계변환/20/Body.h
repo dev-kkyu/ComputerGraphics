@@ -6,6 +6,6 @@ public:
     Body();
     Body(glm::vec3 Color);
 
-    void update();
+    void update() override;
 };
 

@@ -13,12 +13,12 @@ Arm::Arm(glm::vec3 Color, int i) : i(i), rotate(0.f), isrotDirec(false)
 void Arm::update()
 {
 	if (isrotDirec) {
-		rotate += 5.f;
+		rotate += 2.5f;
 		if (rotate > 30.f)
 			isrotDirec = false;
 	}
 	else {
-		rotate -= 5.f;
+		rotate -= 2.5f;
 		if (rotate < -30.f)
 			isrotDirec = true;
 	}

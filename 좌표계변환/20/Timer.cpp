@@ -12,6 +12,23 @@ GLvoid TimerFunction(int value)
 		if (openF >= 0.01)
 			openF -= 0.01f;
 	}
+	if (isW) {
+		robot.update('w');
+	}
+	if (isA) {
+		robot.update('a');
+	}
+	if (isS) {
+		robot.update('s');
+	}
+	if (isD) {
+		robot.update('d');
+	}
+	if (isJump) {
+		robot.update('j');
+	}
+
+
 
 
 	glutPostRedisplay();

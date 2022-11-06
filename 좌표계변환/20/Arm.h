@@ -10,6 +10,6 @@ public:
     Arm();
     Arm(glm::vec3 Color, int i);    //i´Â ¹æÇâ
 
-    void update();
+    void update() override;
 };
 

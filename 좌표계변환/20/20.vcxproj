@@ -133,6 +133,7 @@
     <ClCompile Include="Draw.cpp" />
     <ClCompile Include="Head.cpp" />
     <ClCompile Include="Keyboard.cpp" />
+    <ClCompile Include="KeyboardUP.cpp" />
     <ClCompile Include="Leg.cpp" />
     <ClCompile Include="Nose.cpp" />
     <ClCompile Include="Robot.cpp" />
@@ -146,6 +147,7 @@
     <ClInclude Include="Head.h" />
     <ClInclude Include="Header.h" />
     <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="KeyboardUP.h" />
     <ClInclude Include="Leg.h" />
     <ClInclude Include="Nose.h" />
     <ClInclude Include="Robot.h" />

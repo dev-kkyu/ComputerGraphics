@@ -6,6 +6,5 @@ public:
     Nose();
     Nose(glm::vec3 Color);
 
-    void update();
+    void update() override;
 };
-

@@ -13,6 +13,7 @@ protected:
 
 	glm::vec3 Color;
 
+
 	glm::vec3 Position;
 
 	float Direction;
@@ -21,8 +22,8 @@ public:
 	RobotParts();
 
 	void draw();
-	void keyIn(unsigned char key);
-	virtual void update();
+	void keyIn(glm::vec3 Position, float Direction);
+	virtual void update() = 0;			//완전 가상함수, 추상클래스
 
 };
 

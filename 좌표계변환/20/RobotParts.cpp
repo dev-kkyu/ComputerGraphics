@@ -17,45 +17,9 @@ void RobotParts::draw()
 	glDrawElements(GL_TRIANGLES, 3 * 2 * 6, GL_UNSIGNED_INT, (void*)(sizeof(float) * (0 * 0)));
 }
 
-void RobotParts::keyIn(unsigned char key)
+void RobotParts::keyIn(glm::vec3 Position, float Direction)
 {
-	switch (key) {
-	case 'w':
-	case 'W':
-		Position.z -= 0.02;
-		if (Position.z < -1.f)
-			Position.z = 1.f;
-		Direction = 180.f;
-		break;
-	case 'a':
-	case 'A':
-		Position.x -= 0.02;
-		if (Position.x < -1.f)
-			Position.x = 1.f;
-		Direction = 270.f;
-		break;
-	case 's':
-	case 'S':
-		Position.z += 0.02;
-		if (Position.z > 1.f)
-			Position.z = -1.f;
-		Direction = 0.f;
-		break;
-	case 'd':
-	case 'D':
-		Position.x += 0.02;
-		if (Position.x > 1.f)
-			Position.x = -1.f;
-		Direction = 90.f;
-		break;
-
-	case 'j':
-	case 'J':
-		break;
-	}
+	this->Position = Position;
+	this->Direction = Direction;
 	update();
-}
-
-void RobotParts::update()
-{
 }

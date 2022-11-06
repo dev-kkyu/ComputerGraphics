@@ -6,6 +6,6 @@ public:
     Head();
     Head(glm::vec3 Color);
     
-    void update();
+    void update() override;
 };
 

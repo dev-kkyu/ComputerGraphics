@@ -256,8 +256,8 @@ void topView()
 	glm::mat4 cameraRevolutionW = glm::rotate(Unit, glm::radians(CAngle_RevolutionW), glm::vec3(0.0, 1.0, 0.0));
 	glm::mat4 cameraRevolutionLok = glm::rotate(Unit, glm::radians(CAngle_RevolutionLok), glm::vec3(0.0, 1.0, 0.0));
 
-	glm::mat4 cameraTrans = glm::translate(Unit, glm::vec3(movCX, 0.0f, 0.0f));
-	glm::mat4 cameraTransrev = glm::translate(Unit, glm::vec3(-movCX, 0.0f, 0.0f));
+	glm::mat4 cameraTrans = glm::translate(Unit, glm::vec3(movCX, 0.0f, -3.0f));
+	glm::mat4 cameraTransrev = glm::translate(Unit, glm::vec3(-movCX, 0.0f, 3.0f));
 
 	glm::vec3 cameraPos = glm::vec3(movCX, movCZ + 1.f, 0.0); //--- 카메라 위치 (어디서 볼건지)
 	glm::vec3 cameraDirection = glm::vec3(movCX, 0.0f, 0.0f); //--- 카메라 바라보는 방향 (어디볼건지 하면될듯)
@@ -265,7 +265,7 @@ void topView()
 
 	glm::mat4 view;
 
-	view = cameraRotation * glm::lookAt(cameraPos, cameraDirection, cameraUp) * cameraRevolutionW;
+	view = cameraTransrev * cameraRotation * cameraTrans * glm::lookAt(cameraPos, cameraDirection, cameraUp) * cameraRevolutionW;
 	if (isCRevolutionLok) {
 		view = /*cameraRotation * */glm::lookAt(cameraPos, cameraDirection, cameraUp) * cameraTrans * cameraRevolutionLok * cameraTransrev;
 	}
@@ -295,8 +295,8 @@ void frontView()
 	glm::mat4 cameraRevolutionW = glm::rotate(Unit, glm::radians(CAngle_RevolutionW), glm::vec3(0.0, 1.0, 0.0));
 	glm::mat4 cameraRevolutionLok = glm::rotate(Unit, glm::radians(CAngle_RevolutionLok), glm::vec3(0.0, 1.0, 0.0));
 
-	glm::mat4 cameraTrans = glm::translate(Unit, glm::vec3(movCX, 0.0f, 0.0f));
-	glm::mat4 cameraTransrev = glm::translate(Unit, glm::vec3(-movCX, 0.0f, 0.0f));
+	glm::mat4 cameraTrans = glm::translate(Unit, glm::vec3(movCX, 0.0f, -3.0f));
+	glm::mat4 cameraTransrev = glm::translate(Unit, glm::vec3(-movCX, 0.0f, 3.0f));
 
 	glm::vec3 cameraPos = glm::vec3(movCX, 0.f, 1.0f + movCZ); //--- 카메라 위치 (어디서 볼건지)
 	glm::vec3 cameraDirection = glm::vec3(movCX, 0.0f, 0.0f); //--- 카메라 바라보는 방향 (어디볼건지 하면될듯)
@@ -304,7 +304,7 @@ void frontView()
 
 	glm::mat4 view;
 
-	view = cameraRotation * glm::lookAt(cameraPos, cameraDirection, cameraUp) * cameraRevolutionW;
+	view = cameraTransrev * cameraRotation * cameraTrans * glm::lookAt(cameraPos, cameraDirection, cameraUp) * cameraRevolutionW;
 	if (isCRevolutionLok) {
 		view = /*cameraRotation * */glm::lookAt(cameraPos, cameraDirection, cameraUp) * cameraTrans * cameraRevolutionLok * cameraTransrev;
 	}
