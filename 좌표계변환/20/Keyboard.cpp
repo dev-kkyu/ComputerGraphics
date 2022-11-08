@@ -4,6 +4,8 @@ bool isOpenF;
 bool isW, isA, isS, isD;
 int isJump;
 
+int isCRevolution;
+
 GLvoid Keyboard(unsigned char key, int x, int y) {
 
 	switch (key) {
@@ -31,33 +33,61 @@ GLvoid Keyboard(unsigned char key, int x, int y) {
 		break;
 	case 'j':
 	case 'J':
-		/*if (isJump == 0) {
-			isJump = 1;
-		}
-		else
-			isJump = 2;*/
+	case ' ':
 		if (isJump != 2)
 		{
 			++isJump;
 		}
-
+		break;
+	case 'i':
+	case 'I':
+		robot.update('i');
 		break;
 	case 'z':
+		C_movZ += 0.05;
 		break;
 	case 'Z':
+		C_movZ -= 0.05;
 		break;
 	case 'x':
+		C_movX += 0.05;
 		break;
 	case 'X':
+		C_movX -= 0.05;
 		break;
 	case 'y':
+		isCRevolution != 1 ? isCRevolution = 1 : isCRevolution = 0;
 		break;
 	case 'Y':
+		isCRevolution != -1 ? isCRevolution = -1 : isCRevolution = 0;
 		break;
 
-
+	case 'q':
+	case 'Q':
+		glutLeaveMainLoop();
+		break;
 	case 'h':
 		isDepTest = !isDepTest;
+		break;
+	}
+
+	glutPostRedisplay();
+}
+
+GLvoid SpecialKeyboard(int key, int x, int y)
+{
+	switch (key) {
+	case GLUT_KEY_LEFT:
+		isA = true;
+		break;
+	case GLUT_KEY_RIGHT:
+		isD = true;
+		break;
+	case GLUT_KEY_UP:
+		isW = true;
+		break;
+	case GLUT_KEY_DOWN:
+		isS = true;
 		break;
 	}
 

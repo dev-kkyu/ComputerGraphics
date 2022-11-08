@@ -10,6 +10,10 @@ Nose::Nose(glm::vec3 Color)
 	update();
 }
 
+Nose::~Nose()
+{
+}
+
 void Nose::update()
 {
 	Trans = glm::translate(Unit, glm::vec3(0, 1.f, 0));

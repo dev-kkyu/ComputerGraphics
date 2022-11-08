@@ -10,6 +10,10 @@ Leg::Leg(glm::vec3 Color, int i) : i(i), rotate(0.f), isrotDirec(false)
 	update();
 }
 
+Leg::~Leg()
+{
+}
+
 void Leg::update()
 {
 	if (isrotDirec) {

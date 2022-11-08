@@ -4,7 +4,10 @@ GLfloat openF = 0.f;
 
 Robot robot;
 
+Block block1, block2;
 
+float C_movX, C_movZ;
+float C_RotYAngle;
 
 GLvoid drawScene() //--- 콜백 함수: 그리기 콜백 함수
 {
@@ -18,6 +21,23 @@ GLvoid drawScene() //--- 콜백 함수: 그리기 콜백 함수
 	glClearColor(0.f, 0.f, 0.f, 1.0f);
 	//glClear(GL_COLOR_BUFFER_BIT);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+
+
+	// 카메라
+	glm::vec3 cameraPos = glm::vec3(C_movX, 0.f, 4.f + C_movZ); //--- 카메라 위치 (어디서 볼건지)
+	glm::vec3 cameraDirection = glm::vec3(C_movX, 0.0f, 0.0f); //--- 카메라 바라보는 방향 (어디볼건지 하면될듯)
+	glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f); //--- 카메라 위쪽 방향->벡터임(방향만) (음수하면 화면 상하거꾸로보임)
+
+	glm::mat4 cameraRevolution = glm::rotate(glm::mat4(1.f), glm::radians(C_RotYAngle), glm::vec3(0.f, 1.f, 0.f));
+
+	glm::mat4 view = glm::lookAt(cameraPos, cameraDirection, cameraUp) * cameraRevolution;
+
+	GLuint viewLocation = glGetUniformLocation(shaderID, "viewTransform"); //--- 뷰잉 변환 설정
+	glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
+
+
+
 
 	//-----------------------------------------------------모델변환-------------------------------------------------------
 	//-----------------------------------------------------상자그리기-----------------------------------------------------
@@ -65,14 +85,9 @@ GLvoid drawScene() //--- 콜백 함수: 그리기 콜백 함수
 
 	//------------------------------------------------------장애물그리기---------------------------------------------------------
 
+	block1.draw();
+	block2.draw();
 
-
-
-
-
-
-	//for (int i = 0; i < face[diag1].size(); ++i)
-	//	glDrawElements(GL_LINE_LOOP, 3, GL_UNSIGNED_INT, (void*)(sizeof(float) * (i * 3)));
 
 	glutSwapBuffers();							// 화면에 출력하기
 }

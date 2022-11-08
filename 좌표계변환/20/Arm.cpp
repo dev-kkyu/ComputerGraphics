@@ -10,6 +10,10 @@ Arm::Arm(glm::vec3 Color, int i) : i(i), rotate(0.f), isrotDirec(false)
 	update();
 }
 
+Arm::~Arm()
+{
+}
+
 void Arm::update()
 {
 	if (isrotDirec) {

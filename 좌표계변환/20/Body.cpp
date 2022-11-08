@@ -10,10 +10,14 @@ Body::Body(glm::vec3 Color)
 	update();
 }
 
+Body::~Body()
+{
+}
+
 void Body::update()
 {
 	Trans = glm::translate(Unit, glm::vec3(0, 1.f, 0));
-	Scale = glm::scale(Unit, glm::vec3(0.15, 0.15, 0.15));	//몸통길이 0.3
+	Scale = glm::scale(Unit, glm::vec3(0.15, 0.15, 0.15));	//몸통길이 0.3, 너비 0.15
 
 	Change = Scale * Trans;		//위로 올리고 축소
 

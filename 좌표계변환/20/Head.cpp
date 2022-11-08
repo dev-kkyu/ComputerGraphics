@@ -10,6 +10,10 @@ Head::Head(glm::vec3 Color)
 	update();
 }
 
+Head::~Head()
+{
+}
+
 void Head::update()
 {
 	Trans = glm::translate(Unit, glm::vec3(0, 1.f, 0));

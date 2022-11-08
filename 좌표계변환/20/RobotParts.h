@@ -20,10 +20,11 @@ protected:
 
 public:
 	RobotParts();
+	virtual ~RobotParts();
 
 	void draw();
 	void keyIn(glm::vec3 Position, float Direction);
-	virtual void update() = 0;			//완전 가상함수, 추상클래스
+	virtual void update() = 0;			//순수 가상함수, 추상클래스
 
 };
 

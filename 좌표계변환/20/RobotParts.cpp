@@ -5,6 +5,10 @@ RobotParts::RobotParts() : Unit(glm::mat4(1.f)), Scale(glm::mat4(1.f)), Trans(gl
 {
 }
 
+RobotParts::~RobotParts()
+{
+}
+
 void RobotParts::draw()
 {
 	GLuint Color = glGetUniformLocation(shaderID, "Color");

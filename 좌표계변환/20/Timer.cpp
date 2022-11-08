@@ -29,6 +29,12 @@ GLvoid TimerFunction(int value)
 	}
 
 
+	if (isCRevolution == 1) {
+		C_RotYAngle += 1.f;
+	}
+	else if (isCRevolution == -1) {
+		C_RotYAngle -= 1.f;
+	}
 
 
 	glutPostRedisplay();

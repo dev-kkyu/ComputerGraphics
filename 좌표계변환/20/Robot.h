@@ -6,6 +6,10 @@
 #include "Arm.h"
 #include "Leg.h"
 
+#include "Block.h"
+
+extern Block block1, block2;
+
 class Robot
 {
 	Head head;
@@ -26,9 +30,19 @@ class Robot
 
 public:
 	Robot();
+	~Robot();
 
 	void Jump();
 	void draw();
 	void update(unsigned char key);
+
+	float getLeft();
+	float getRight();
+	float getBehind();
+	float getFront();
+	float getBottom();
+	float getTop();
 };
 
+bool isCollide(Robot r1, Block r2);
+bool isCollide2D(Robot r1, Block r2);

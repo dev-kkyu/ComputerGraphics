@@ -30,3 +30,7 @@ extern GLfloat openF;
 extern bool isOpenF;
 extern bool isW, isA, isS, isD;
 extern int isJump;
+
+extern float C_movX, C_movZ;
+extern float C_RotYAngle;
+extern int isCRevolution;

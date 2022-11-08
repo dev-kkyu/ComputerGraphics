@@ -21,3 +21,21 @@ GLvoid KeyboardUP(unsigned char key, int x, int y)
 		break;
 	}
 }
+
+GLvoid SpecialKeyboardUP(int key, int x, int y)
+{
+	switch (key) {
+	case GLUT_KEY_LEFT:
+		isA = false;
+		break;
+	case GLUT_KEY_RIGHT:
+		isD = false;
+		break;
+	case GLUT_KEY_UP:
+		isW = false;
+		break;
+	case GLUT_KEY_DOWN:
+		isS = false;
+		break;
+	}
+}

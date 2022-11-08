@@ -11,7 +11,6 @@ GLuint make_shaderProgram();
 void InitBuffer();
 
 GLvoid Reshape(int w, int h);
-GLvoid SpecialKeyboard(int key, int x, int y);
 GLvoid Mouse(int button, int state, int x, int y);
 GLvoid Motion(int x, int y);
 
@@ -31,39 +30,9 @@ vector<glm::ivec3> face;
 
 bool isDepTest = true;
 
-glm::vec3 CubeS, CubeL;
-
 void main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 {
 	ReadObj("cube.obj");
-
-	random_device rd;
-	default_random_engine dre(rd());
-	uniform_real_distribution<float> GenXY(-1, 1);
-	CubeS = glm::vec3(GenXY(dre), GenXY(dre), -1.f);
-	CubeL = glm::vec3(GenXY(dre), GenXY(dre), -0.8f);
-	for (int i = 0; i < 3; ++i) {
-		if (CubeS.x > CubeL.x)
-			swap(CubeS.x, CubeL.x);
-		if (CubeS.y > CubeL.y)
-			swap(CubeS.y, CubeL.y);
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
 
 	//--- 윈도우 생성하기
 	glutInit(&argc, argv);
@@ -87,6 +56,7 @@ void main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 	glutKeyboardFunc(Keyboard);
 	glutKeyboardUpFunc(KeyboardUP);
 	glutSpecialFunc(SpecialKeyboard);
+	glutSpecialUpFunc(SpecialKeyboardUP);
 	glutMouseFunc(Mouse);
 	glutMotionFunc(Motion);
 	glutTimerFunc(TimerValue, TimerFunction, 1);
@@ -196,15 +166,16 @@ GLvoid Reshape(int w, int h) //--- 콜백 함수: 다시 그리기 콜백 함수
 	winHeight = h;
 
 	// 카메라
-	glm::vec3 cameraPos = glm::vec3(0.f, 0.f, 4.f); //--- 카메라 위치 (어디서 볼건지)
-	glm::vec3 cameraDirection = glm::vec3(0.f, 0.0f, 0.0f); //--- 카메라 바라보는 방향 (어디볼건지 하면될듯)
+	glm::vec3 cameraPos = glm::vec3(C_movX, 0.f, 4.f + C_movZ); //--- 카메라 위치 (어디서 볼건지)
+	glm::vec3 cameraDirection = glm::vec3(C_movX, 0.0f, 0.0f); //--- 카메라 바라보는 방향 (어디볼건지 하면될듯)
 	glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f); //--- 카메라 위쪽 방향->벡터임(방향만) (음수하면 화면 상하거꾸로보임)
 
-	glm::mat4 view = glm::lookAt(cameraPos, cameraDirection, cameraUp);
+	glm::mat4 cameraRevolution = glm::rotate(glm::mat4(1.f), glm::radians(C_RotYAngle), glm::vec3(0.f, 1.f, 0.f));
+
+	glm::mat4 view = glm::lookAt(cameraPos, cameraDirection, cameraUp) * cameraRevolution;
 
 	GLuint viewLocation = glGetUniformLocation(shaderID, "viewTransform"); //--- 뷰잉 변환 설정
 	glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
-
 
 
 	// 원근투영
@@ -213,22 +184,6 @@ GLvoid Reshape(int w, int h) //--- 콜백 함수: 다시 그리기 콜백 함수
 	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, glm::value_ptr(projection));
 
 	glViewport(0, 0, w, h);
-}
-
-GLvoid SpecialKeyboard(int key, int x, int y)
-{
-	switch (key) {
-	case GLUT_KEY_LEFT:
-		break;
-	case GLUT_KEY_RIGHT:
-		break;
-	case GLUT_KEY_UP:
-		break;
-	case GLUT_KEY_DOWN:
-		break;
-	}
-
-	glutPostRedisplay();
 }
 
 GLvoid Mouse(int button, int state, int x, int y)
@@ -317,13 +272,4 @@ void ReadObj(string file)
 			face.push_back(facetemp);
 		}
 	}
-
-	//cout << "v information" << endl;
-	//for (int i = 0; i < vertex.size(); ++i) {
-	//	cout << vertex[i].x << ' ' << vertex[i].y << ' ' << vertex[i].z << endl;
-	//}
-	//cout << endl << "f information" << endl;;
-	//for (int i = 0; i < face.size(); ++i) {
-	//	cout << face[i].x << ' ' << face[i].y << ' ' << face[i].z << endl;
-	//}
 }
