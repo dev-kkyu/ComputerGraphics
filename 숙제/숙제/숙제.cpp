@@ -14,12 +14,11 @@ void InitBuffer();
 GLvoid Reshape(int w, int h);
 
 char* filetobuf(string file);
-//void ReadObj(string file);
-void ReadObj(string file, vector<glm::vec3>& vertex, vector<glm::vec3>& vcolor, vector<glm::ivec3>& face);
+void ReadObj(string file, vector<glm::vec3>& vertex, vector<glm::ivec3>& face);
 
 // 전역변수
 GLint winWidth = 1500, winHeight = 900;
-GLuint VAO, VBO[2], EBO;
+GLuint VAO, VBO, EBO;
 GLuint FVAO, FVBO;
 GLuint rectVAO, rectVBO;
 GLuint shaderID; //--- 세이더 프로그램 이름
@@ -138,33 +137,25 @@ GLuint make_shaderProgram()
 void InitBuffer()					// 도형 버퍼 생성
 {
 	vector<glm::vec3> vertex;
-	vector<glm::vec3> vcolor;
 	vector<glm::ivec3> face;
 
-	ReadObj("cube.obj", vertex, vcolor, face);
+	ReadObj("cube.obj", vertex, face);
 
 	//--- VAO 객체 생성 및 바인딩
 	glGenVertexArrays(1, &VAO);
-	glGenBuffers(2, VBO);
+	glGenBuffers(1, &VBO);
 	glGenBuffers(1, &EBO);
 
 	//// 정점, 색상 접근 규칙 만들기
 	glBindVertexArray(VAO);
 
-	glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, vertex.size() * sizeof(glm::vec3), &vertex[0], GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);		// 버텍스 속성 배열을 사용하도록 한다.(0번 배열 활성화)
 
-	glBindBuffer(GL_ARRAY_BUFFER, VBO[1]);
-	glBufferData(GL_ARRAY_BUFFER, vcolor.size() * sizeof(glm::vec3), &vcolor[0], GL_STATIC_DRAW);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(1);
-
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, face.size() * sizeof(glm::ivec3), &face[0], GL_STATIC_DRAW);
-
-
 
 
 
@@ -229,7 +220,7 @@ char* filetobuf(string file) {
 	return const_cast<char*>(str_buf->c_str());
 }
 
-void ReadObj(string file, vector<glm::vec3>& vertex, vector<glm::vec3>& vcolor, vector<glm::ivec3>& face)
+void ReadObj(string file, vector<glm::vec3>& vertex, vector<glm::ivec3>& face)
 {
 	ifstream in(file);
 	if (!in) {
@@ -237,10 +228,6 @@ void ReadObj(string file, vector<glm::vec3>& vertex, vector<glm::vec3>& vcolor, 
 		return;
 	}
 
-
-	random_device rd;
-	default_random_engine dre(rd());
-	uniform_real_distribution<float> urd{ 0.f, 1.f };
 	while (in) {
 		string temp;
 		getline(in, temp);
@@ -249,16 +236,10 @@ void ReadObj(string file, vector<glm::vec3>& vertex, vector<glm::vec3>& vcolor, 
 			istringstream slice(temp);
 
 			glm::vec3 vertemp;
-			glm::vec3 clrtemp;
-			for (int i = 0; i < 3; ++i) {
-				clrtemp[i] = urd(dre);
-			}
 			char tmpword;
 			slice >> tmpword >> vertemp.x >> vertemp.y >> vertemp.z;
 
 			vertex.push_back(vertemp);
-			vcolor.push_back(clrtemp);
-
 		}
 
 		else if (temp[0] == 'f' && temp[1] == ' ') {

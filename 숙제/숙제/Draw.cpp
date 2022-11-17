@@ -9,8 +9,6 @@ World newWorld;
 
 GLvoid drawScene() //--- 콜백 함수: 그리기 콜백 함수
 {
-	const glm::mat4 Unit(1.0f);
-
 	if (isDepTest)
 		glEnable(GL_DEPTH_TEST);
 	else
@@ -20,13 +18,7 @@ GLvoid drawScene() //--- 콜백 함수: 그리기 콜백 함수
 	//glEnable(GL_CULL_FACE);		//컬링 설정해주기
 
 	glClearColor(0.f, 0.f, 0.f, 1.0f);
-	//glClear(GL_COLOR_BUFFER_BIT);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-
-	GLuint option = glGetUniformLocation(shaderID, "option");
-	glUniform1i(option, 1);													// 내가 지정한 색깔로 바꿀거임
-	//glUniform1i(option, 0);													// 원래 있던 쉐이더버퍼에 있는색깔로 쓸거임
 
 
 

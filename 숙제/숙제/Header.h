@@ -39,6 +39,7 @@ extern int personView;
 extern pair<float, float> MouseAngle;
 
 extern bool isW, isA, isS, isD;
+extern int isJump;
 
 extern bool isRobotDraw;
 extern bool isMoveStopNDown;

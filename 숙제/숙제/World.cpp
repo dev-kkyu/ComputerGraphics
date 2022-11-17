@@ -1,8 +1,12 @@
 #include "World.h"
 
 World::World()
-	: dxObjPos(0.f), dzObjPos(0.f)
+	: dxObjPos(0.f), dzObjPos(0.f), dyObjPos(0.f),
+	MASS(10), VELOCITY(25)	//무게, 초기속도, 현재속도
+
 {
+	Vel = VELOCITY;
+
 	int widthNum;
 	int heightNum;
 	cout << "가로 개수 입력 : ";
@@ -31,6 +35,33 @@ World::World()
 
 
 	ROBOT.setPos(glm::vec3(startObjPos.first, 0.f, startObjPos.second), 0.f);
+}
+
+void World::Jump()
+{
+	double F;
+
+	if (isJump == 2) {
+		isJump = 3;
+		Vel = VELOCITY;
+	}
+
+	if (Vel > 0) {
+		F = MASS * Vel * Vel;
+	}
+	else
+		F = -MASS * Vel * Vel;
+
+	dyObjPos += F / 50000.f;
+
+	Vel -= 1;
+
+	if (dyObjPos <= 0.f) {
+		Vel = VELOCITY;
+		dyObjPos = 0.f;
+		isJump = 0;
+	}
+
 }
 
 void World::Draw()
@@ -66,7 +97,7 @@ void World::Update()
 		}
 	}
 
-	ROBOT.Update(startObjPos.first + dxObjPos, startObjPos.second + dzObjPos);
+	ROBOT.Update(startObjPos.first + dxObjPos, dyObjPos, startObjPos.second + dzObjPos);
 }
 
 void World::MakeMaze()
@@ -153,8 +184,8 @@ void World::Camera(int personView)
 		glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, glm::value_ptr(projection));
 
 		// 카메라
-		glm::vec3 cameraPos = glm::vec3(startObjPos.first + dxObjPos, 2.f, startObjPos.second + dzObjPos); //--- 카메라 위치 (어디서 볼건지)
-		glm::vec3 cameraDirection = glm::vec3(startObjPos.first + dxObjPos, 3.0f, 0.0f + dzObjPos); //--- 카메라 바라보는 방향 (어디볼건지 하면될듯)
+		glm::vec3 cameraPos = glm::vec3(startObjPos.first + dxObjPos, 2.f + dyObjPos, startObjPos.second + dzObjPos); //--- 카메라 위치 (어디서 볼건지)
+		glm::vec3 cameraDirection = glm::vec3(startObjPos.first + dxObjPos, 2.0f + dyObjPos, 0.0f + dzObjPos); //--- 카메라 바라보는 방향 (어디볼건지 하면될듯)
 		glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f); //--- 카메라 위쪽 방향->벡터임(방향만) (음수하면 화면 상하거꾸로보임)
 
 		glm::mat4 cameraRotationX = glm::rotate(glm::mat4(1.f), glm::radians(MouseAngle.first), glm::vec3(0.f, 1.f, 0.f));
@@ -173,8 +204,8 @@ void World::Camera(int personView)
 		glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, glm::value_ptr(projection));
 
 		// 카메라
-		glm::vec3 cameraPos = glm::vec3(startObjPos.first + dxObjPos, 3.f, startObjPos.second + dzObjPos); //--- 카메라 위치 (어디서 볼건지)
-		glm::vec3 cameraDirection = glm::vec3(startObjPos.first + dxObjPos, 2.0f, 0.0f + dzObjPos); //--- 카메라 바라보는 방향 (어디볼건지 하면될듯)
+		glm::vec3 cameraPos = glm::vec3(startObjPos.first + dxObjPos, 2.f + dyObjPos, startObjPos.second + dzObjPos); //--- 카메라 위치 (어디서 볼건지)
+		glm::vec3 cameraDirection = glm::vec3(startObjPos.first + dxObjPos, 2.0f + dyObjPos, 0.0f + dzObjPos); //--- 카메라 바라보는 방향 (어디볼건지 하면될듯)
 		glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f); //--- 카메라 위쪽 방향->벡터임(방향만) (음수하면 화면 상하거꾸로보임)
 
 		glm::mat4 cameraRotationX = glm::rotate(glm::mat4(1.f), glm::radians(MouseAngle.first), glm::vec3(0.f, 1.f, 0.f));
@@ -293,6 +324,11 @@ void World::KeyIn(GLuint key)
 		}
 	}
 	break;
+
+	case 'j':
+		Jump();
+		break;
+
 	case 'c':
 		dxObjPos = 0.f;
 		dzObjPos = 0.f;

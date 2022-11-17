@@ -12,6 +12,8 @@ bool isMoveStopNDown;				//≥∑√Áº≠ ∏ÿ√‚∞«¡ˆ	//±‚∫ª false
 
 float MoveSpeed = 1.f;
 
+int isJump;
+
 GLvoid Keyboard(unsigned char key, int x, int y) {
 	switch (key) {
 	case 'w':
@@ -29,6 +31,13 @@ GLvoid Keyboard(unsigned char key, int x, int y) {
 	case 'd':
 	case 'D':
 		isD = true;
+		break;
+	case 'j':
+	case 'J':
+	case ' ':
+		if (isJump != 2) {
+			++isJump;
+		}
 		break;
 
 

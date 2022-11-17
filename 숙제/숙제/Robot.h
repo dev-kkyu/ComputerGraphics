@@ -19,18 +19,12 @@ class Robot
 	glm::vec3 Position;
 	float Direction;
 
-	const int VELOCITY;
-	const int MASS;
-
-	int Vel;
-
 public:
 	Robot();
 	Robot(glm::vec3 Position);
 
-	void Jump();
 	void Draw();
-	void Update(float ObjPosX, float ObjPosZ);
+	void Update(float ObjPosX, float ObjPosY, float ObjPosZ);
 
 	void setPos(glm::vec3 Position, float Direction);
 
@@ -41,6 +35,3 @@ public:
 	float getBottom();
 	float getTop();
 };
-
-//bool isCollide(Robot r1, Block r2);
-//bool isCollide2D(Robot r1, Block r2);

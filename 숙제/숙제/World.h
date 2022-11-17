@@ -11,12 +11,19 @@ class World
 	float dxObjPos;
 	float dzObjPos;
 
+	float dyObjPos;
+
 	pair<float, float> startObjPos;
 
-	bool isUpdate;
+	const int VELOCITY;
+	const int MASS;
+
+	int Vel;
 
 public: 
 	World();
+
+	void Jump();
 
 	void Draw();
 	void Update();

@@ -26,6 +26,9 @@ GLvoid TimerFunction(int value)
 		if (isD) {
 			newWorld.KeyIn('d');
 		}
+		if (isJump) {
+			newWorld.KeyIn('j');
+		}
 	}
 
 	glutPostRedisplay();
