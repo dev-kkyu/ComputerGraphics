@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Cube">
+      <UniqueIdentifier>{d404a222-4bb3-453d-ba3d-d28939af2d5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="World">
+      <UniqueIdentifier>{86992c7f-89c9-4a6c-8b04-e0d3585cf1ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RobotParts">
+      <UniqueIdentifier>{471b4e23-ff75-4869-b5c7-2b04301da731}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RobotParts\Arm">
+      <UniqueIdentifier>{aabf5aa9-7534-43af-bbd2-3c22f5b51070}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RobotParts\Body">
+      <UniqueIdentifier>{e5a97e5e-96ad-4133-82c7-0ed82fd1cce8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RobotParts\Head">
+      <UniqueIdentifier>{685392ca-f61b-45f7-9a68-f2d682f5271c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RobotParts\Leg">
+      <UniqueIdentifier>{fd23b707-adc1-4d89-a4e0-717a3a68fac9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RobotParts\Nose">
+      <UniqueIdentifier>{27fcae03-b8c8-49f8-9f6f-ecfb6389ff88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Robot">
+      <UniqueIdentifier>{7149e318-2192-4043-b009-7b68004c72ea}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="fragment.glsl">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="vertex.glsl">
+      <Filter>리소스 파일</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Draw.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Header.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardUP.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Mouse.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Cube.h">
+      <Filter>Cube</Filter>
+    </ClInclude>
+    <ClInclude Include="World.h">
+      <Filter>World</Filter>
+    </ClInclude>
+    <ClInclude Include="Arm.h">
+      <Filter>RobotParts\Arm</Filter>
+    </ClInclude>
+    <ClInclude Include="Body.h">
+      <Filter>RobotParts\Body</Filter>
+    </ClInclude>
+    <ClInclude Include="Head.h">
+      <Filter>RobotParts\Head</Filter>
+    </ClInclude>
+    <ClInclude Include="Leg.h">
+      <Filter>RobotParts\Leg</Filter>
+    </ClInclude>
+    <ClInclude Include="Nose.h">
+      <Filter>RobotParts\Nose</Filter>
+    </ClInclude>
+    <ClInclude Include="RobotParts.h">
+      <Filter>RobotParts</Filter>
+    </ClInclude>
+    <ClInclude Include="Robot.h">
+      <Filter>Robot</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Draw.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Keyboard.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyboardUP.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Mouse.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="숙제.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Cube.cpp">
+      <Filter>Cube</Filter>
+    </ClCompile>
+    <ClCompile Include="World.cpp">
+      <Filter>World</Filter>
+    </ClCompile>
+    <ClCompile Include="Arm.cpp">
+      <Filter>RobotParts\Arm</Filter>
+    </ClCompile>
+    <ClCompile Include="Body.cpp">
+      <Filter>RobotParts\Body</Filter>
+    </ClCompile>
+    <ClCompile Include="Head.cpp">
+      <Filter>RobotParts\Head</Filter>
+    </ClCompile>
+    <ClCompile Include="Leg.cpp">
+      <Filter>RobotParts\Leg</Filter>
+    </ClCompile>
+    <ClCompile Include="Nose.cpp">
+      <Filter>RobotParts\Nose</Filter>
+    </ClCompile>
+    <ClCompile Include="RobotParts.cpp">
+      <Filter>RobotParts</Filter>
+    </ClCompile>
+    <ClCompile Include="Robot.cpp">
+      <Filter>Robot</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

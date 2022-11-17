@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{13f0bde3-311e-41a7-9104-aa0ad3e33a94}</ProjectGuid>
-    <RootNamespace>My18</RootNamespace>
+    <ProjectGuid>{c1b6fce8-d451-4e0e-993e-b3ef9467fd0c}</ProjectGuid>
+    <RootNamespace>숙제</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -76,11 +76,11 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -109,6 +109,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -128,24 +129,42 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="18.cpp" />
-    <ClCompile Include="Draw.cpp" />
-    <ClCompile Include="Keyboard.cpp" />
-    <ClCompile Include="Timer.cpp" />
+    <None Include="fragment.glsl" />
+    <None Include="vertex.glsl" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="fragment.glsl">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </None>
-    <None Include="vertex.glsl">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
+    <ClInclude Include="Arm.h" />
+    <ClInclude Include="Body.h" />
+    <ClInclude Include="Cube.h" />
     <ClInclude Include="Draw.h" />
+    <ClInclude Include="Head.h" />
     <ClInclude Include="Header.h" />
     <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="KeyboardUP.h" />
+    <ClInclude Include="Leg.h" />
+    <ClInclude Include="Mouse.h" />
+    <ClInclude Include="Nose.h" />
+    <ClInclude Include="Robot.h" />
+    <ClInclude Include="RobotParts.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="World.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Arm.cpp" />
+    <ClCompile Include="Body.cpp" />
+    <ClCompile Include="Cube.cpp" />
+    <ClCompile Include="Draw.cpp" />
+    <ClCompile Include="Head.cpp" />
+    <ClCompile Include="Keyboard.cpp" />
+    <ClCompile Include="KeyboardUP.cpp" />
+    <ClCompile Include="Leg.cpp" />
+    <ClCompile Include="Mouse.cpp" />
+    <ClCompile Include="Nose.cpp" />
+    <ClCompile Include="Robot.cpp" />
+    <ClCompile Include="RobotParts.cpp" />
+    <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="World.cpp" />
+    <ClCompile Include="숙제.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

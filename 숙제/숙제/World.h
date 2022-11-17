@@ -1,0 +1,32 @@
+#pragma once
+#include "Header.h"
+#include "Cube.h"
+#include "Robot.h"
+
+class World
+{
+	vector<vector<Cube*>*> CUBE;
+	Robot ROBOT;
+
+	float dxObjPos;
+	float dzObjPos;
+
+	pair<float, float> startObjPos;
+
+	bool isUpdate;
+
+public: 
+	World();
+
+	void Draw();
+	void Update();
+
+
+	void MakeMaze();
+	void Camera(int personView);
+
+	void KeyIn(GLuint key);
+
+	bool isCollide(Robot r1, Cube r2);
+	bool isCollide2D(Robot r1, Cube r2);
+};

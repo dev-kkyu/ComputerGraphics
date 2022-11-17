@@ -115,11 +115,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Object Include="cube.obj">
-      <Filter>리소스 파일</Filter>
-    </Object>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="fragment.glsl">
       <Filter>리소스 파일</Filter>
     </None>
