@@ -35,7 +35,7 @@ void main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowPosition(50, 50);
 	glutInitWindowSize(winWidth, winHeight);
-	glutCreateWindow("Example1");
+	glutCreateWindow("숙제입니당");
 
 	//--- GLEW 초기화하기
 	glewExperimental = GL_TRUE;
