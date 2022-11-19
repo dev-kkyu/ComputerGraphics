@@ -32,7 +32,7 @@ void Arm::Update()
 
 	glm::mat4 Scale;
 	glm::mat4 Trans;
-	glm::mat4 Rotate;
+	//glm::mat4 Rotate;
 
 	Trans = glm::translate(Unit, glm::vec3(0, 1.f, 0));
 	Scale = glm::scale(Unit, glm::vec3(0.03, 0.075, 0.03));

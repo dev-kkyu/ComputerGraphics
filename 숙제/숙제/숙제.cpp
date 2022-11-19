@@ -14,7 +14,7 @@ void InitBuffer();
 GLvoid Reshape(int w, int h);
 
 char* filetobuf(string file);
-void ReadObj(string file, vector<glm::vec3>& vertex, vector<glm::ivec3>& face);
+void ReadObj(string file, vector<glm::vec3>& vertexInfo);
 
 // 전역변수
 GLint winWidth = 1500, winHeight = 900;
@@ -137,9 +137,9 @@ GLuint make_shaderProgram()
 void InitBuffer()					// 도형 버퍼 생성
 {
 	vector<glm::vec3> vertex;
-	vector<glm::ivec3> face;
+	//vector<glm::ivec3> face;
 
-	ReadObj("cube.obj", vertex, face);
+	ReadObj("cube.obj", vertex);
 
 	//--- VAO 객체 생성 및 바인딩
 	glGenVertexArrays(1, &VAO);
@@ -151,11 +151,13 @@ void InitBuffer()					// 도형 버퍼 생성
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, vertex.size() * sizeof(glm::vec3), &vertex[0], GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);		// 버텍스 속성 배열을 사용하도록 한다.(0번 배열 활성화)
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(sizeof(float) * 3));
+	glEnableVertexAttribArray(1);		// 버텍스 속성 배열을 사용하도록 한다.(0번 배열 활성화)
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, face.size() * sizeof(glm::ivec3), &face[0], GL_STATIC_DRAW);
+	/*glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, face.size() * sizeof(glm::ivec3), &face[0], GL_STATIC_DRAW);*/
 
 
 
@@ -220,8 +222,14 @@ char* filetobuf(string file) {
 	return const_cast<char*>(str_buf->c_str());
 }
 
-void ReadObj(string file, vector<glm::vec3>& vertex, vector<glm::ivec3>& face)
+void ReadObj(string file, vector<glm::vec3>& vertexInfo)
 {
+	vector<glm::vec3> vertex;
+	vector<glm::vec3> vNormal;
+
+	vector<glm::ivec3> vFace;
+	vector<glm::ivec3> vnFace;
+
 	ifstream in(file);
 	if (!in) {
 		cout << "OBJ File NO Have" << endl;
@@ -242,10 +250,21 @@ void ReadObj(string file, vector<glm::vec3>& vertex, vector<glm::ivec3>& face)
 			vertex.push_back(vertemp);
 		}
 
+		else if (temp[0] == 'v' && temp[1] == 'n' && temp[2] == ' ') {
+			istringstream slice(temp);
+
+			glm::vec3 vertemp;
+			string tmpword;
+			slice >> tmpword >> vertemp.x >> vertemp.y >> vertemp.z;
+
+			vNormal.push_back(vertemp);
+		}
+
 		else if (temp[0] == 'f' && temp[1] == ' ') {
 			istringstream slice(temp);
 
-			glm::ivec3 facetemp;
+			glm::ivec3 vfacetemp;
+			glm::ivec3 vnfacetemp;
 			for (int i = -1; i < 3; ++i) {
 				string word;
 				getline(slice, word, ' ');
@@ -255,13 +274,54 @@ void ReadObj(string file, vector<glm::vec3>& vertex, vector<glm::ivec3>& face)
 					string slashtmp;
 					getline(slash, slashtmp, '/');
 
-					facetemp[i] = atoi(slashtmp.c_str()) - 1;			//f 읽을땐 첫번째값만(v)	//배열인덱스 쓸거라 -1해줌
+					vfacetemp[i] = atoi(slashtmp.c_str()) - 1;			//f 읽을땐 첫번째값만(v)	//배열인덱스 쓸거라 -1해줌
+
+					getline(slash, slashtmp, '/');
+					getline(slash, slashtmp, '/');
+					vnfacetemp[i] = atoi(slashtmp.c_str()) - 1;
 				}
 				else {
-					facetemp[i] = atoi(word.c_str()) - 1;			//f 읽을땐 첫번째값만(v)	//배열인덱스 쓸거라 -1해줌
+					vfacetemp[i] = atoi(word.c_str()) - 1;			//f 읽을땐 첫번째값만(v)	//배열인덱스 쓸거라 -1해줌
 				}
 			}
-			face.push_back(facetemp);
+			vFace.push_back(vfacetemp);
+			vnFace.push_back(vnfacetemp);
 		}
 	}
+
+	for (int i = 0; i < vFace.size(); ++i) {
+		vertexInfo.push_back(vertex[vFace[i].x]);
+		vertexInfo.push_back(vNormal[vnFace[i].x]);
+
+		vertexInfo.push_back(vertex[vFace[i].y]);
+		vertexInfo.push_back(vNormal[vnFace[i].y]);
+
+		vertexInfo.push_back(vertex[vFace[i].z]);
+		vertexInfo.push_back(vNormal[vnFace[i].z]);
+	}
+
+	//for (glm::vec3& ver : vertex) {
+	//	cout << ver.x << ' ' << ver.y << ' ' << ver.z << endl;
+	//}
+	//cout << endl;
+
+	//for (glm::vec3& ver : vNormal) {
+	//	cout << ver.x << ' ' << ver.y << ' ' << ver.z << endl;
+	//}
+	//cout << endl;
+
+	//for (glm::ivec3& ver : vFace) {
+	//	cout << ver.x << ' ' << ver.y << ' ' << ver.z << endl;
+	//}
+	//cout << endl;
+
+	//for (glm::ivec3& ver : vnFace) {
+	//	cout << ver.x << ' ' << ver.y << ' ' << ver.z << endl;
+	//}
+	//cout << endl;
+
+	//for (glm::vec3& ver : vertexInfo) {
+	//	cout << ver.x << ' ' << ver.y << ' ' << ver.z << endl;
+	//}
+	//cout << endl;
 }

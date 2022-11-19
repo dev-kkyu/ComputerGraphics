@@ -77,7 +77,7 @@ void World::Jump()
 
 void World::Draw()
 {
-	GLuint Color = glGetUniformLocation(shaderID, "Color");
+	GLuint Color = glGetUniformLocation(shaderID, "objectColor");
 	//-----------------------------------------------------바닥그리기-----------------------------------------------------
 
 	glBindVertexArray(FVAO);
@@ -157,13 +157,19 @@ void World::Camera(int personView)
 		glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, glm::value_ptr(projection));
 
 		// 카메라
-		glm::vec3 cameraPos = glm::vec3(C_movX, 0.f, 20.f + C_movZ); //--- 카메라 위치 (어디서 볼건지)
+		glm::vec3 cameraPos = glm::vec3(
+			glm::sin(glm::radians(-C_RotYAngle)) * (20.f + C_movZ) + glm::cos(glm::radians(C_RotYAngle)) * C_movX, 
+			0.f,
+			glm::cos(glm::radians(C_RotYAngle)) * (20.f + C_movZ) + glm::sin(glm::radians(-C_RotYAngle)) * C_movX); //--- 카메라 위치 (어디서 볼건지)
 		glm::vec3 cameraDirection = glm::vec3(C_movX, 0.0f, 0.0f); //--- 카메라 바라보는 방향 (어디볼건지 하면될듯)
 		glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f); //--- 카메라 위쪽 방향->벡터임(방향만) (음수하면 화면 상하거꾸로보임)
 
 		glm::mat4 cameraRevolution = glm::rotate(glm::mat4(1.f), glm::radians(C_RotYAngle), glm::vec3(0.f, 1.f, 0.f));
 
-		glm::mat4 view = glm::lookAt(cameraPos, cameraDirection, cameraUp) * cameraRevolution;
+		glm::mat4 view = glm::lookAt(cameraPos, cameraDirection, cameraUp)/* * cameraRevolution*/;
+
+		unsigned int viewPosLocation = glGetUniformLocation(shaderID, "viewPos");		//--- viewPos 값 전달: 카메라 위치
+		glUniform3f(viewPosLocation, cameraPos.x, cameraPos.y, cameraPos.z);
 
 		GLuint viewLocation = glGetUniformLocation(shaderID, "viewTransform"); //--- 뷰잉 변환 설정
 		glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
@@ -226,6 +232,9 @@ void World::Camera(int personView)
 
 		GLuint viewLocation = glGetUniformLocation(shaderID, "viewTransform"); //--- 뷰잉 변환 설정
 		glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
+
+		unsigned int viewPosLocation = glGetUniformLocation(shaderID, "viewPos");		//--- viewPos 값 전달: 카메라 위치
+		glUniform3f(viewPosLocation, cameraPos.x, cameraPos.y, cameraPos.z);
 	}
 		  break;
 	}

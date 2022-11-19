@@ -7,6 +7,7 @@ class RobotParts
 protected:
 	const glm::mat4 Unit;
 	glm::mat4 Change;
+	glm::mat4 Rotate;
 
 	glm::vec3 Color;
 

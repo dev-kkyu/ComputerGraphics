@@ -18,7 +18,7 @@ void Head::Update()
 {
 	glm::mat4 Scale;
 	glm::mat4 Trans;
-	glm::mat4 Rotate;
+	//glm::mat4 Rotate;
 
 	Trans = glm::translate(Unit, glm::vec3(0, 1.f, 0));
 	Scale = glm::scale(Unit, glm::vec3(0.075, 0.05, 0.075));	//머리사이즈 0.1

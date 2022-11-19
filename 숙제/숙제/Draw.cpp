@@ -20,7 +20,11 @@ GLvoid drawScene() //--- 콜백 함수: 그리기 콜백 함수
 	glClearColor(0.f, 0.f, 0.f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-
+	unsigned int lightPosLocation = glGetUniformLocation(shaderID, "lightPos");		//--- lightPos 값 전달: (0.0, 0.0, 5.0);
+	////glUniform3f(lightPosLocation, glm::sin(glm::radians(M_RotYAngle)) * -5.0, 5.0, glm::cos(glm::radians(M_RotYAngle)) * 5.0 );
+	glUniform3f(lightPosLocation, 125.f, 10.0, 0.0);
+	unsigned int lightColorLocation = glGetUniformLocation(shaderID, "lightColor");	//--- lightColor 값 전달: (1.0, 1.0, 1.0) 백색
+	glUniform3f(lightColorLocation, 245 / 255., 214 / 255., 1.f);
 
 	glViewport(0, 0, winWidth, winHeight);
 	normalView();
@@ -55,7 +59,7 @@ void resetView()
 
 void drawLine()
 {
-	GLuint Color = glGetUniformLocation(shaderID, "Color");
+	GLuint Color = glGetUniformLocation(shaderID, "objectColor");
 
 	glBindVertexArray(rectVAO);
 	glLineWidth(4.f);
