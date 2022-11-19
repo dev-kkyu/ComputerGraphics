@@ -3,17 +3,28 @@
 World::World()
 	: dxObjPos(0.f), dzObjPos(0.f), dyObjPos(0.f),
 	MASS(10), VELOCITY(25)	//무게, 초기속도, 현재속도
-
 {
 	Vel = VELOCITY;
 
 	int widthNum;
 	int heightNum;
-	cout << "가로 개수 입력 : ";
-	cin >> widthNum;
+	while (true) {
+		cout << "가로 개수 입력 : ";
+		cin >> widthNum;
+		if (widthNum < 5 || widthNum > 25) {
+			cout << "범위는 5~25 입니다." << endl;
+			continue;
+		}
 
-	cout << "세로 개수 입력 : ";
-	cin >> heightNum;
+		cout << "세로 개수 입력 : ";
+		cin >> heightNum;
+		if (heightNum < 5 || heightNum > 25) {
+			cout << "범위는 5~25 입니다." << endl;
+			continue;
+		}
+
+		break;
+	}
 
 	for (int i = 0; i < heightNum; ++i) {
 		CUBE.push_back(new vector<Cube*>);

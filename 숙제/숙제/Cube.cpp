@@ -68,7 +68,7 @@ void Cube::Update()
 		glm::mat4 Trans;
 		glm::mat4 Rotate;
 
-		if (maxScale / 3 < Yscale)
+		if (maxScale / 5 < Yscale)
 			Yscale -= speed;
 
 
