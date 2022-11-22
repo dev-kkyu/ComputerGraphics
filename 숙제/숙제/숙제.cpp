@@ -144,7 +144,7 @@ void InitBuffer()					// 도형 버퍼 생성
 	//--- VAO 객체 생성 및 바인딩
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
-	glGenBuffers(1, &EBO);
+	//glGenBuffers(1, &EBO);
 
 	//// 정점, 색상 접근 규칙 만들기
 	glBindVertexArray(VAO);
@@ -154,7 +154,7 @@ void InitBuffer()					// 도형 버퍼 생성
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);		// 버텍스 속성 배열을 사용하도록 한다.(0번 배열 활성화)
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(sizeof(float) * 3));
-	glEnableVertexAttribArray(1);		// 버텍스 속성 배열을 사용하도록 한다.(0번 배열 활성화)
+	glEnableVertexAttribArray(1);		// 버텍스 속성 배열을 사용하도록 한다.(1번 배열 활성화)
 
 	/*glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, face.size() * sizeof(glm::ivec3), &face[0], GL_STATIC_DRAW);*/
@@ -164,18 +164,20 @@ void InitBuffer()					// 도형 버퍼 생성
 	glGenVertexArrays(1, &FVAO);
 	glGenBuffers(1, &FVBO);
 
-	float floorVertex[4][3]{							//가로세로 -25~25의 50*50바닥을 만들어준다.
-	{-25, 0, -25},
-	{-25, 0, 25},
-	{25, 0, 25},
-	{25, 0, -25}
+	float floorVertex[4][6]{							//가로세로 -25~25의 50*50바닥을 만들어준다.
+	{-25, 0, -25, 0, 1, 0},
+	{-25, 0, 25, 0, 1, 0},
+	{25, 0, 25, 0, 1, 0},
+	{25, 0, -25, 0, 1, 0}
 	};
 	glBindVertexArray(FVAO);
 	
 	glBindBuffer(GL_ARRAY_BUFFER, FVBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(floorVertex), floorVertex, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);		// 버텍스 속성 배열을 사용하도록 한다.(0번 배열 활성화)
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(sizeof(float) * 3));
+	glEnableVertexAttribArray(1);		// 버텍스 속성 배열을 사용하도록 한다.(1번 배열 활성화)
 
 
 

@@ -157,10 +157,7 @@ void World::Camera(int personView)
 		glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, glm::value_ptr(projection));
 
 		// 카메라
-		glm::vec3 cameraPos = glm::vec3(
-			glm::sin(glm::radians(-C_RotYAngle)) * (20.f + C_movZ) + glm::cos(glm::radians(C_RotYAngle)) * C_movX, 
-			0.f,
-			glm::cos(glm::radians(C_RotYAngle)) * (20.f + C_movZ) + glm::sin(glm::radians(-C_RotYAngle)) * C_movX); //--- 카메라 위치 (어디서 볼건지)
+		glm::vec3 cameraPos = glm::vec3(C_movX, 0.f, 20.f + C_movZ);
 		glm::vec3 cameraDirection = glm::vec3(C_movX, 0.0f, 0.0f); //--- 카메라 바라보는 방향 (어디볼건지 하면될듯)
 		glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f); //--- 카메라 위쪽 방향->벡터임(방향만) (음수하면 화면 상하거꾸로보임)
 
@@ -221,6 +218,7 @@ void World::Camera(int personView)
 		glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, glm::value_ptr(projection));
 
 		// 카메라
+		//glm::vec3 cameraPos = glm::vec3(startObjPos.first + dxObjPos, 2.f + dyObjPos, startObjPos.second + dzObjPos); //--- 카메라 위치 (어디서 볼건지)
 		glm::vec3 cameraPos = glm::vec3(startObjPos.first + dxObjPos, 2.f + dyObjPos, startObjPos.second + dzObjPos); //--- 카메라 위치 (어디서 볼건지)
 		glm::vec3 cameraDirection = glm::vec3(startObjPos.first + dxObjPos, 2.0f + dyObjPos, 0.0f + dzObjPos); //--- 카메라 바라보는 방향 (어디볼건지 하면될듯)
 		glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f); //--- 카메라 위쪽 방향->벡터임(방향만) (음수하면 화면 상하거꾸로보임)
@@ -228,6 +226,7 @@ void World::Camera(int personView)
 		glm::mat4 cameraRotationX = glm::rotate(glm::mat4(1.f), glm::radians(MouseAngle.first), glm::vec3(0.f, 1.f, 0.f));
 		glm::mat4 cameraRotationY = glm::rotate(glm::mat4(1.f), glm::radians(MouseAngle.second), glm::vec3(1.f, 0.f, 0.f));
 
+		//glm::mat4 view = glm::translate(glm::mat4(1.f), glm::vec3(0.f, 1.f, -5.f)) * cameraRotationY * cameraRotationX * glm::lookAt(cameraPos, cameraDirection, cameraUp);
 		glm::mat4 view = glm::translate(glm::mat4(1.f), glm::vec3(0.f, 1.f, -5.f)) * cameraRotationY * cameraRotationX * glm::lookAt(cameraPos, cameraDirection, cameraUp);
 
 		GLuint viewLocation = glGetUniformLocation(shaderID, "viewTransform"); //--- 뷰잉 변환 설정

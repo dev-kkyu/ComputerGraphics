@@ -6,7 +6,6 @@ class Cube
 private:
 	const glm::mat4 Unit;
 	glm::mat4 Change;
-	glm::mat4 Rotate;
 
 	glm::vec3 Position;			//y는 0으로 고정
 	glm::vec3 Color;

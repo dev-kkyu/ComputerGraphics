@@ -5,14 +5,13 @@ Cube::Cube() : Unit(glm::mat4(1.f))
 }
 
 Cube::Cube(glm::vec3 Position, float Xscale, float Zscale)
-	: Unit(glm::mat4(1.f)), Position(Position), Xscale(Xscale), Zscale(Zscale), isRender(true),		//Position의 y는 0으로 고정한다.
-	Rotate(glm::mat4(1.f))
+	: Unit(glm::mat4(1.f)), Position(Position), Xscale(Xscale), Zscale(Zscale), isRender(true)		//Position의 y는 0으로 고정한다.
 {
 	random_device rd;
 	default_random_engine dre(rd());
 	uniform_real_distribution<float> Curd{ 0.f, 1.f };
 	Color = glm::vec3(Curd(dre), Curd(dre), Curd(dre));
-	//Color = glm::vec3(245/255., 214/255., 1.f);
+	//Color = glm::vec3(203/255., 175/255., 1.f);
 
 	uniform_real_distribution<float> maxSurd{ 5.f, 15.f };
 	maxScale = maxSurd(dre);
@@ -46,7 +45,6 @@ void Cube::Update()
 	if (isUpDownMove) {
 		glm::mat4 Scale;
 		glm::mat4 Trans;
-		glm::mat4 Rotate;
 
 		if (Yscale <= 0.f)
 			Direction = 1;
@@ -68,7 +66,6 @@ void Cube::Update()
 	else if (isMoveStopNDown) {
 		glm::mat4 Scale;
 		glm::mat4 Trans;
-		glm::mat4 Rotate;
 
 		if (maxScale / 5 < Yscale)
 			Yscale -= speed;
@@ -96,10 +93,6 @@ void Cube::Draw()
 		GLuint modelLocation = glGetUniformLocation(shaderID, "modelTransform");
 		glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(Change)); //--- modelTransform 변수에 변환
 
-		GLuint modelRotate = glGetUniformLocation(shaderID, "modelRotate");
-		glUniformMatrix4fv(modelRotate, 1, GL_FALSE, glm::value_ptr(Rotate)); //--- modelTransform 변수에 변환 값 적용하기
-
-		//glDrawElements(GL_TRIANGLES, 3 * 2 * 6, GL_UNSIGNED_INT, (void*)(sizeof(float) * (0 * 0)));
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 	}
 }

@@ -6,8 +6,6 @@ layout (location = 1) in vec3 vNormal;	//--- 법선벡터
 out vec3 FragPos;						//--- 객체의 위치값을 프래그먼트 세이더로 보낸다.
 out vec3 Normal;						//--- 노멀값을 프래그먼트 세이더로 보낸다.
 
-uniform mat4 modelRotate;
-
 uniform mat4 modelTransform;			//--- 모델링 변환
 uniform mat4 viewTransform;				//--- 뷰잉 변환(카메라)
 uniform mat4 projectionTransform;		//--- 투영 변환(직각, 원근)
@@ -18,5 +16,5 @@ void main()
 
 	FragPos = vec3(modelTransform * vec4(vPos, 1.0));	//--- 객체에 대한 조명 계산을 프래그먼트 셰이더에서 한다. 
 														//--- 따라서 월드공간에 있는 버텍스 값을 프래그먼트 셰이더로 보낸다.
-	Normal = vec3(modelRotate * vec4(vNormal, 1.0));									//--- 노멀값을 프래그먼트 세이더로 보낸다.
+	Normal = mat3(transpose(inverse(modelTransform))) * vNormal;			//--- 노멀값을 프래그먼트 세이더로 보낸다.
 }

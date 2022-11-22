@@ -10,9 +10,18 @@ World newWorld;
 GLvoid drawScene() //--- 콜백 함수: 그리기 콜백 함수
 {
 	if (isDepTest)
-		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_DEPTH_TEST);		//은면제거
 	else
 		glDisable(GL_DEPTH_TEST);
+
+	//glEnable(GL_LINE_SMOOTH);
+	//glEnable(GL_POLYGON_SMOOTH);
+
+	glEnable(GL_DITHER);        // 표면을 매끄럽게
+	glEnable(GL_CULL_FACE);     // 컬링
+	glEnable(GL_LINE_SMOOTH);   // 안티 앨리어싱
+	glEnable(GL_POLYGON_SMOOTH);// 안티 앨리어싱
+	glShadeModel(GL_SMOOTH);    // 부드러운 음영을 수행합니다.
 
 	//glFrontFace(GL_CW);			//시계방향이 앞면으로 설정(박스 바깥쪽이 뒷면, 안쪽이 앞면)
 	//glEnable(GL_CULL_FACE);		//컬링 설정해주기

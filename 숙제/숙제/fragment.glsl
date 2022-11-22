@@ -13,7 +13,7 @@ uniform vec3 viewPos;		//--- 카메라 위치
 
 void main()
 {
-	float ambientLight = 0.7;										//--- 주변 조명 계수: 0.0 ≤ ambientLight ≤ 1.
+	float ambientLight = 0.5;										//--- 주변 조명 계수: 0.0 ≤ ambientLight ≤ 1.
 	vec3 ambient = ambientLight * lightColor;						//--- 주변 조명 값
 
 	vec3 normalVector = normalize (Normal);							//--- 노말값을 정규화한다.
