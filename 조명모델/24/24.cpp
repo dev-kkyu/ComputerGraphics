@@ -12,17 +12,65 @@ char* filetobuf(string file);
 void ReadObj(string file, vector<glm::vec3>& vertexInfo);
 
 // 전역변수
-GLint winWidth = 1100, winHeight = 800;
-GLuint cubeVAO, cubeVBO;
-GLuint sphereVAO, sphereVBO;
+GLuint winWidth = 1100, winHeight = 800;
 GLuint shaderID; //--- 세이더 프로그램 이름
 GLuint vertexShader; //--- 버텍스 세이더 객체
 GLuint fragmentShader; //--- 프래그먼트 세이더 객체
 
-vector<glm::vec3> cubevertex;
-vector<glm::vec3> spherevertex;
+GLuint floorVAO, floorVBO;
+GLuint rectVAO, rectVBO;
+GLuint pentaVAO, pentaVBO;
+
+vector<glm::vec3> rectData;
 
 bool isDepTest = true;
+
+//float Cube[24][9]{								//좌표 노말 컬러
+//	{-1,1,1,		0,0,1,		1,1,0},			//앞
+//	{-1,-1,1,		0,0,1,		165 / 255.,102 / 255.,1},
+//	{1,-1,1,		0,0,1,		0,1,1},
+//	{1,1,1,			0,0,1,		165 / 255.,102 / 255.,1},
+//
+//	{1,1,-1,		0,0,-1,		1,1,0},			//뒤
+//	{1,-1,-1,		0,0,-1,		165 / 255.,102 / 255.,1},
+//	{-1,-1,-1,		0,0,-1,		0,1,1},
+//	{-1,1,-1,		0,0,-1,		165 / 255.,102 / 255.,1},
+//
+//	{-1,1,-1,		-1,0,0,		1,1,0},			//왼
+//	{-1,1,1,		-1,0,0,		165 / 255.,102 / 255.,1},
+//	{-1,-1,1,		-1,0,0,		0,1,1},
+//	{-1,-1,-1,		-1,0,0,		165 / 255.,102 / 255.,1},
+//
+//	{1,1,1,			1,0,0,		1,1,0},			//오
+//	{1,-1,1,		1,0,0,		165 / 255.,102 / 255.,1},
+//	{1,-1,-1,		1,0,0,		0,1,1},
+//	{1,1,-1,		1,0,0,		165 / 255.,102 / 255.,1},
+//
+//	{-1,1,-1,		0,1,0,		1,1,0},			//위
+//	{-1,1,1,		0,1,0,		165 / 255.,102 / 255.,1},
+//	{1,1,1,			0,1,0,		0,1,1},
+//	{1,1,-1,		0,1,0,		165 / 255.,102 / 255.,1},
+//
+//	{-1,-1,1,		0,-1,0,		1,1,0},			//아래
+//	{-1,-1,-1,		0,-1,0,		165 / 255.,102 / 255.,1},
+//	{1,-1,-1,		0,-1,0,		0,1,1},
+//	{1,-1,1,		0,-1,0,		165 / 255.,102 / 255.,1}
+//};
+
+float floorData[4][9]{
+	{-1,0,-1,		0,1,0,		1,0,0},			//위
+	{-1,0,1,		0,1,0,		0,1,0},
+	{1,0,1,			0,1,0,		0,0,1},
+	{1,0,-1,		0,1,0,		0,1,0}
+};
+
+float pentaData[5][6]{
+	{0,1,0,		0,0,1},
+	{-0.8,0.3,0,		0,0,1},
+	{-0.425,-0.625,0,		0,0,1},
+	{0.425,-0.625,0,		0,0,1},
+	{0.8, 0.3,0,		0,0,1},
+};
 
 
 void main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
@@ -32,7 +80,7 @@ void main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowPosition(50, 50);
 	glutInitWindowSize(winWidth, winHeight);
-	glutCreateWindow("Example22");
+	glutCreateWindow("Example24");
 
 	//--- GLEW 초기화하기
 	glewExperimental = GL_TRUE;
@@ -129,35 +177,54 @@ GLuint make_shaderProgram()
 
 void InitBuffer()					// 도형 버퍼 생성
 {
-	ReadObj("cube.obj", cubevertex);
-	ReadObj("sphere.obj", spherevertex);
+	//--- VAO 객체 생성 및 바인딩
+	glGenVertexArrays(1, &floorVAO);
+	glGenBuffers(1, &floorVBO);
+
+	//// 정점, 색상 접근 규칙 만들기
+	glBindVertexArray(floorVAO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, floorVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(floorData), floorData, GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);		// 버텍스 속성 배열을 사용하도록 한다.(0번 배열 활성화)
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(sizeof(float) * 3));
+	glEnableVertexAttribArray(1);		// 버텍스 속성 배열을 사용하도록 한다.(1번 배열 활성화)
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)(sizeof(float) * 6));
+	glEnableVertexAttribArray(2);		// 버텍스 속성 배열을 사용하도록 한다.(2번 배열 활성화)
+
+
+	ReadObj("cube.obj", rectData);
+	//--- VAO 객체 생성 및 바인딩
+	glGenVertexArrays(1, &rectVAO);
+	glGenBuffers(1, &rectVBO);
+
+	//// 정점, 색상 접근 규칙 만들기
+	glBindVertexArray(rectVAO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, rectVBO);
+	glBufferData(GL_ARRAY_BUFFER, rectData.size() * sizeof(glm::vec3), &rectData[0], GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);		// 버텍스 속성 배열을 사용하도록 한다.(0번 배열 활성화)
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(sizeof(float) * 3));
+	glEnableVertexAttribArray(1);		// 버텍스 속성 배열을 사용하도록 한다.(1번 배열 활성화)
+
+
 
 	//--- VAO 객체 생성 및 바인딩
-	glGenVertexArrays(1, &cubeVAO);
-	glGenBuffers(1, &cubeVBO);
-	glGenVertexArrays(1, &sphereVAO);
-	glGenBuffers(1, &sphereVBO);
-
+	glGenVertexArrays(1, &pentaVAO);
+	glGenBuffers(1, &pentaVBO);
 
 	//// 정점, 색상 접근 규칙 만들기
-	glBindVertexArray(cubeVAO);
+	glBindVertexArray(pentaVAO);
 
-	glBindBuffer(GL_ARRAY_BUFFER, cubeVBO);
-	glBufferData(GL_ARRAY_BUFFER, cubevertex.size() * sizeof(glm::vec3), &cubevertex[0], GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, pentaVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(pentaData), pentaData, GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);		// 버텍스 속성 배열을 사용하도록 한다.(0번 배열 활성화)
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(sizeof(float) * 3));
 	glEnableVertexAttribArray(1);		// 버텍스 속성 배열을 사용하도록 한다.(1번 배열 활성화)
-
-	//// 정점, 색상 접근 규칙 만들기
-	glBindVertexArray(sphereVAO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, sphereVBO);
-	glBufferData(GL_ARRAY_BUFFER, spherevertex.size() * sizeof(glm::vec3), &spherevertex[0], GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);		// 버텍스 속성 배열을 사용하도록 한다.(0번 배열 활성화)
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(sizeof(float) * 3));
-	glEnableVertexAttribArray(1);		// 버텍스 속성 배열을 사용하도록 한다.(1번 배열 활성화)
+	
 }
 
 //--- 다시그리기 콜백 함수

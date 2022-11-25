@@ -20,14 +20,11 @@
 #include "Mouse.h"
 #include "Timer.h"
 
-#include "Light.h"
-#include "Sphere.h"
+#include "Crane.h"
+#include "LightBox.h"
 
-class Light;
-class Sphere;
-
-extern Light LIGHT;
-extern Sphere SPHERE[3];
+class LightBox;
+extern LightBox LIGHT;
 
 #pragma comment(lib, "glew32.lib")
 #pragma comment(lib, "freeglut.lib")
@@ -37,16 +34,19 @@ using namespace std;
 
 extern int TimerValue;
 
-extern GLint winWidth, winHeight;
-extern GLuint cubeVAO, sphereVAO;
+extern GLuint winWidth, winHeight;
+extern GLuint floorVAO, rectVAO, pentaVAO;
 extern GLuint shaderID; //--- 세이더 프로그램 이름
 
-extern vector<glm::vec3> cubevertex;
-extern vector<glm::vec3> spherevertex;
+extern vector<glm::vec3> rect;
 
 extern bool isDepTest;
 
-extern float L_RotYAngle;
-extern int isLRotate;
-
 extern int colorValue;
+extern int isLRotate;
+extern float L_RotYAngle;
+
+extern int isCRotate;
+extern float C_movX, C_movZ;
+extern float C_RotYAngle;
+
