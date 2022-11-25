@@ -11,6 +11,13 @@ GLvoid TimerFunction(int value)
 		C_RotYAngle -= 1.f;
 	}
 
+	if (isLRevolution == 1) {
+		newWorld.LightUpdate(1);
+	}
+	else if (isLRevolution == -1) {
+		newWorld.LightUpdate(-1);
+	}
+
 	newWorld.Update();
 
 	if (isRobotDraw) {

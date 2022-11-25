@@ -1,6 +1,8 @@
 #include "Keyboard.h"
 
 int isCRevolution;
+int isLRevolution;
+
 bool isUpDownMove = true;			//애니메이션 작동여부 //기본 true
 int personView;
 
@@ -111,7 +113,12 @@ GLvoid Keyboard(unsigned char key, int x, int y) {
 	case 'Y':
 		isCRevolution != -1 ? isCRevolution = -1 : isCRevolution = 0;
 		break;
-
+	case 'l':
+		isLRevolution != 1 ? isLRevolution = 1 : isLRevolution = 0;
+		break;
+	case 'L':
+		isLRevolution != -1 ? isLRevolution = -1 : isLRevolution = 0;
+		break;
 
 
 
@@ -121,6 +128,7 @@ GLvoid Keyboard(unsigned char key, int x, int y) {
 		C_movZ = 0.f;
 		C_RotYAngle = 0.f;
 		isCRevolution = 0;
+		isLRevolution = 0;
 		isUpDownMove = true;			//애니메이션 작동여부 //기본 true
 		personView = 0;
 		isW = isA = isS = isD = false;

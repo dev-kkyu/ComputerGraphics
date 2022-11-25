@@ -34,6 +34,8 @@ extern float C_RotYAngle;
 extern int isCRevolution;
 extern bool isUpDownMove;
 
+extern int isLRevolution;
+
 extern int personView;
 
 extern pair<float, float> MouseAngle;

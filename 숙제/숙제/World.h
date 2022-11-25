@@ -2,11 +2,13 @@
 #include "Header.h"
 #include "Cube.h"
 #include "Robot.h"
+#include "LightBox.h"
 
 class World
 {
 	vector<vector<Cube*>*> CUBE;
 	Robot ROBOT;
+	LightBox LIGHT;
 
 	float dxObjPos;
 	float dzObjPos;
@@ -28,6 +30,7 @@ public:
 	void Draw();
 	void Update();
 
+	void LightUpdate(int Direction);
 
 	void MakeMaze();
 	void Camera(int personView);

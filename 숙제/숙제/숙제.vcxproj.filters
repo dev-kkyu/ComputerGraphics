@@ -40,6 +40,9 @@
     <Filter Include="Robot">
       <UniqueIdentifier>{7149e318-2192-4043-b009-7b68004c72ea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="LightBox">
+      <UniqueIdentifier>{c42dee47-a7dd-4d7d-9298-a9db9db47a0f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="fragment.glsl">
@@ -95,6 +98,9 @@
     <ClInclude Include="Robot.h">
       <Filter>Robot</Filter>
     </ClInclude>
+    <ClInclude Include="LightBox.h">
+      <Filter>LightBox</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Draw.cpp">
@@ -141,6 +147,9 @@
     </ClCompile>
     <ClCompile Include="Robot.cpp">
       <Filter>Robot</Filter>
+    </ClCompile>
+    <ClCompile Include="LightBox.cpp">
+      <Filter>LightBox</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
