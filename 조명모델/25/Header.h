@@ -41,3 +41,4 @@ extern bool isDepTest;
 extern float L_RotYAngle;
 extern int isLRotate;
 extern int FractalNum;
+extern bool isDrowSnow;

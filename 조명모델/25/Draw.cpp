@@ -67,9 +67,11 @@ GLvoid drawScene() //--- 콜백 함수: 그리기 콜백 함수
 	for(Sphere& sph: SPHERE)
 		sph.Draw();
 	Pry.Draw(FractalNum);
-	for (Snow& snow : SNOW) {
-		snow.Draw();
-	}
+
+	if (isDrowSnow)
+		for (Snow& snow : SNOW)
+			snow.Draw();
+	
 
 	glutSwapBuffers();							// 화면에 출력하기
 }

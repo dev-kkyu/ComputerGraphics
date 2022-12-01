@@ -3,6 +3,7 @@
 extern Light LIGHT;
 
 int isLRotate;
+bool isDrowSnow;
 
 GLvoid Keyboard(unsigned char key, int x, int y) {
 	switch (key) {
@@ -11,6 +12,10 @@ GLvoid Keyboard(unsigned char key, int x, int y) {
 		break;
 	case 'R':
 		isLRotate != -1 ? isLRotate = -1 : isLRotate = 0;
+		break;
+	case 's':
+	case 'S':
+		isDrowSnow = not isDrowSnow;
 		break;
 	case '0':
 		FractalNum = 0;
@@ -35,6 +40,9 @@ GLvoid Keyboard(unsigned char key, int x, int y) {
 		break;
 	case '7':
 		FractalNum = 7;
+		break;
+	case '8':
+		FractalNum = 8;
 		break;
 	case 'i':
 	case 'o':
